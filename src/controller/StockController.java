@@ -6,6 +6,7 @@ import model.dao.StockDAO;
 import model.dto.CommentDTO;
 import model.dto.PostDTO;
 import model.dto.StockDTO;
+import config.StockAPIClient;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -24,7 +25,13 @@ public class StockController {
      */
     public List<StockDTO> getAllStocks() {
         // TODO
-        return stockDAO.selectAll();
+        List<StockDTO> stocks = stockDAO.selectAll();
+        for (StockDTO stock : stocks) {
+            int price = StockAPIClient.fetchClosePrice(stock.getStockCode());
+            stockDAO.updatePrice(stock.getStockCode(), price);
+            stock.setCurrentPrice(price); // DTO 값도 갱신해야 JList에 바로 반영됨
+        }
+        return stocks;
     }
 
     // [B] TODO: getPostsByStock(String stockCode)
@@ -49,7 +56,10 @@ public class StockController {
     }
     // [B] TODO: addComment(int postId, String content, String writer)
     public void addComment(int postId, String content, String writer){
-        CommentDTO commentDTO = new CommentDTO(postId, content, writer);
-        commentDAO.insertComment(commentDTO);
+        CommentDTO dto = new CommentDTO();
+        dto.setPostId(postId);
+        dto.setReplyContent(content);
+        dto.setReplyWriter(writer);
+        commentDAO.insertComment(dto);
     }
 }
