@@ -7,6 +7,11 @@ CREATE DATABASE IF NOT EXISTS stock_db
 
 USE stock_db;
 
+-- 기존 테이블이 존재할 경우 하위 의존성 순서대로 삭제
+DROP TABLE IF EXISTS Comment;
+DROP TABLE IF EXISTS Post;
+DROP TABLE IF EXISTS Stock;
+
 -- [A] TODO: Stock 테이블 생성
 --           (stock_code VARCHAR PK, stock_name VARCHAR, current_price INT DEFAULT 0)
 CREATE TABLE Stock (
