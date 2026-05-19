@@ -22,6 +22,12 @@ public class CommentDTO {
         this.replyWriter = replyWriter;
         this.createdAt = createdAt;
     }
+    // insert용 생성자
+    public CommentDTO(int postId, String replyContent, String replyWriter) {
+        this.postId = postId;
+        this.replyContent = replyContent;
+        this.replyWriter = replyWriter;
+    }
 
     public int getCommentId() {
         return commentId;
