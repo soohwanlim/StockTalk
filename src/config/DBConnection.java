@@ -19,7 +19,7 @@ public class DBConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    };
+    }
 
     public static DBConnection getInstance() {
         return instance;
