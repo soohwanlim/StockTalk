@@ -7,14 +7,9 @@ CREATE DATABASE IF NOT EXISTS stock_db
 
 USE stock_db;
 
--- 기존 테이블이 존재할 경우 하위 의존성 순서대로 삭제
-DROP TABLE IF EXISTS Comment;
-DROP TABLE IF EXISTS Post;
-DROP TABLE IF EXISTS Stock;
-
 -- [A] TODO: Stock 테이블 생성
 --           (stock_code VARCHAR PK, stock_name VARCHAR, current_price INT DEFAULT 0)
-CREATE TABLE Stock (
+CREATE TABLE IF NOT EXISTS Stock (
     stock_code VARCHAR(10) NOT NULL,
     stock_name VARCHAR(50) NOT NULL,
     current_price INT DEFAULT 0,
@@ -23,7 +18,7 @@ CREATE TABLE Stock (
 -- [A] TODO: Post 테이블 생성
 --           (post_id INT PK AUTO_INCREMENT, stock_code FK, title, content,
 --            writer DEFAULT '익명', post_password, created_at TIMESTAMP DEFAULT NOW())
-CREATE TABLE Post (
+CREATE TABLE IF NOT EXISTS Post (
     post_id INT AUTO_INCREMENT NOT NULL,
     stock_code VARCHAR(10) NOT NULL,
     title VARCHAR(100) NOT NULL,
@@ -37,7 +32,7 @@ CREATE TABLE Post (
 -- [A] TODO: Comment 테이블 생성
 --           (comment_id INT PK AUTO_INCREMENT, post_id FK, reply_content,
 --            reply_writer DEFAULT '익명', created_at TIMESTAMP DEFAULT NOW())
-CREATE TABLE Comment (
+CREATE TABLE IF NOT EXISTS Comment (
     comment_id INT AUTO_INCREMENT NOT NULL,
     post_id INT NOT NULL,
     reply_content VARCHAR(500) NOT NULL,
