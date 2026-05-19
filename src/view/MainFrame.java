@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.awt.*;
+import java.io.File;
 import java.net.URL;
 
 // [B 담당] 메인 윈도우 — 3단 분할 레이아웃
@@ -52,10 +53,23 @@ public class MainFrame extends JFrame {
         JPanel logoPanel = new JPanel();
         try {
             URL imageUrl = getClass().getResource("/logo_image/stocktalk_logo.png");
+            if (imageUrl == null) {
+                imageUrl = getClass().getResource("/stocktalk_logo.png");
+            }
 
+            ImageIcon icon = null;
             if (imageUrl != null) {
-                ImageIcon icon = new ImageIcon(imageUrl);
-                JLabel logoLabel = new JLabel(icon);
+                icon = new ImageIcon(imageUrl);
+            } else {
+                File imageFile = new File("logo_image/stocktalk_logo.png");
+                if (imageFile.exists()) {
+                    icon = new ImageIcon(imageFile.getAbsolutePath());
+                }
+            }
+
+            if (icon != null) {
+                Image scaled = icon.getImage().getScaledInstance(120, 60, Image.SCALE_SMOOTH);
+                JLabel logoLabel = new JLabel(new ImageIcon(scaled));
                 logoPanel.add(logoLabel);
             } else {
                 JLabel textLogo = new JLabel("STOCK TALK");
@@ -70,14 +84,15 @@ public class MainFrame extends JFrame {
 
         leftPanel.add(logoPanel, BorderLayout.NORTH);
 
-        // [B] TODO: 좌측 패널 - 종목 JList (JScrollPane 감싸기)
+        // 좌측 패널: 로고 + 종목 리스트
+        // leftPanel에는 상단 로고, 중앙 종목 리스트가 들어갑니다.
         stockList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane stockScroll = new JScrollPane(stockList);
         leftPanel.add(stockScroll, BorderLayout.CENTER);
-        // [B] TODO: 우측 상단 - 게시글 JTable
-        //           컬럼: 번호 | 제목 | 댓글수 | 작성자 | 작성일
-        //           글쓰기 / 삭제 버튼 포함
+        // 우측 상단 패널: 게시글 목록
+        // topPanel에는 게시글 테이블과 글쓰기/삭제 버튼이 들어갑니다.
+//           컬럼: 번호 | 제목 | 댓글수 | 작성자 | 작성일
         String[] columns = {"번호", "제목", "댓글수", "작성자", "작성일"};
 
         postTableModel = new DefaultTableModel(columns, 0) {
@@ -110,8 +125,10 @@ public class MainFrame extends JFrame {
 
         JPanel middlePanel = new JPanel(new BorderLayout());
         middlePanel.add(contentScroll, BorderLayout.CENTER);
-        // [B] TODO: 우측 하단 - 댓글 JList + 입력 필드 + 등록 버튼
-        JList<String> commentList = new JList<>(commentListModel);
+        // 우측 중단 패널: 본문 내용
+        // middlePanel에는 선택된 게시글 본문이 표시됩니다.
+        // 우측 하단 패널: 댓글 목록 + 입력 폼
+        commentList = new JList<>(commentListModel);
         JScrollPane commentScroll = new JScrollPane(commentList);
 
         JButton commentBtn = new JButton("등록");
@@ -132,6 +149,12 @@ public class MainFrame extends JFrame {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(commentScroll, BorderLayout.CENTER);
         bottomPanel.add(commentInputPanel, BorderLayout.SOUTH);
+        // bottomPanel에는 댓글 리스트와 댓글 입력/등록 폼이 들어갑니다.
+        // 화면 구성 요약:
+        //   leftPanel  = 좌측 전체(종목 리스트)
+        //   topPanel   = 우측 상단(게시글 목록)
+        //   middlePanel= 우측 중단(본문)
+        //   bottomPanel= 우측 하단(댓글)
         // [B] TODO: JSplitPane으로 좌/우, 상/중/하 분할 배치
         JSplitPane verticalSplit1 =
                 new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, middlePanel);
@@ -272,7 +295,7 @@ public class MainFrame extends JFrame {
             Object[] row = {
                     post.getPostId(),
                     post.getTitle(),
-//                    post.getCommentCount(),
+                    post.getReplyCount(),
                     post.getWriter(),
                     post.getCreatedAt()
             };

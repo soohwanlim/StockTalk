@@ -36,9 +36,8 @@ public class StockController {
         return postDAO.selectPostById(postId);
     }
     // [B] TODO: writePost(PostDTO post)
-    public int writePost(PostDTO post) {
+    public void writePost(PostDTO post) {
         postDAO.insertPost(post);
-        return postDAO.selectPostById(post.getPostId()).getPostId(); // 생성된 postId반환
     }
     // [B] TODO: deletePost(int postId, String pw)
     public boolean deletePost(int postId, String pw){
