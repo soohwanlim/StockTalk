@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <display-name>StockTalk</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <!--
+      서블릿 매핑은 src/web의 @WebServlet 애노테이션으로 처리한다.
+      (StockApiServlet -> /api/stocks, PostApiServlet -> /api/posts, CommentApiServlet -> /api/comments)
+
+      TODO: 한글 파라미터(제목/내용/작성자) 깨짐 방지를 위한 인코딩 필터 등록
+            - CharacterEncodingFilter(UTF-8) 작성 후 /* 경로에 매핑
+            - 또는 각 서블릿 doPost 시작부에서 req.setCharacterEncoding("UTF-8") 직접 호출
+    -->
+
+</web-app>

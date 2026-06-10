@@ -25,10 +25,6 @@ public class DBConnection {
         return instance;
     }
 
-    /**
-     * [A] TODO: DriverManager로 DB 커넥션을 생성해서 반환하세요.
-     * 드라이버 로드 실패 시 SQLException으로 감싸서 던지세요.
-     */
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName(DRIVER);

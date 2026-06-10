@@ -7,17 +7,12 @@ CREATE DATABASE IF NOT EXISTS stock_db
 
 USE stock_db;
 
--- [A] TODO: Stock 테이블 생성
---           (stock_code VARCHAR PK, stock_name VARCHAR, current_price INT DEFAULT 0)
 CREATE TABLE IF NOT EXISTS Stock (
     stock_code VARCHAR(10) NOT NULL,
     stock_name VARCHAR(50) NOT NULL,
     current_price INT DEFAULT 0,
     PRIMARY KEY (stock_code)
 );
--- [A] TODO: Post 테이블 생성
---           (post_id INT PK AUTO_INCREMENT, stock_code FK, title, content,
---            writer DEFAULT '익명', post_password, created_at TIMESTAMP DEFAULT NOW())
 CREATE TABLE IF NOT EXISTS Post (
     post_id INT AUTO_INCREMENT NOT NULL,
     stock_code VARCHAR(10) NOT NULL,
@@ -29,9 +24,6 @@ CREATE TABLE IF NOT EXISTS Post (
     PRIMARY KEY (post_id),
     FOREIGN KEY (stock_code) REFERENCES Stock(stock_code) ON DELETE CASCADE
 );
--- [A] TODO: Comment 테이블 생성
---           (comment_id INT PK AUTO_INCREMENT, post_id FK, reply_content,
---            reply_writer DEFAULT '익명', created_at TIMESTAMP DEFAULT NOW())
 CREATE TABLE IF NOT EXISTS Comment (
     comment_id INT AUTO_INCREMENT NOT NULL,
     post_id INT NOT NULL,

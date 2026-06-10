@@ -14,7 +14,6 @@ public class PostDTO {
     private Timestamp createdAt;
     private int replyCount; // LEFT JOIN으로 집계한 댓글 수
 
-    // [A] TODO: getter / setter 작성
     public PostDTO() {
     }
 

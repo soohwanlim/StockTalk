@@ -14,6 +14,8 @@ import java.io.File;
 import java.net.URL;
 
 // [B 담당] 메인 윈도우 — 3단 분할 레이아웃
+// 레거시 Swing 데스크톱 클라이언트. 웹 전환 후에는 WebContent/index.html + js/app.js가
+// 동일한 화면 구성을 AJAX 기반으로 대체한다 (TODO: WebContent, src/web 참고)
 public class MainFrame extends JFrame {
 
     private final StockController controller = new StockController();
@@ -46,9 +48,6 @@ public class MainFrame extends JFrame {
         setSize(1000, 650);
         setLocationRelativeTo(null);
 
-        // [B] TODO: 좌상단 로고 패널 구성
-        //           getClass().getResource("/stocktalk_logo.png") 로 이미지 로드
-        //           실패 시 텍스트 JLabel로 대체 (try-catch)
         JPanel leftPanel = new JPanel(new BorderLayout());
         JPanel logoPanel = new JPanel();
         try {
@@ -117,7 +116,6 @@ public class MainFrame extends JFrame {
         topPanel.add(tableScroll, BorderLayout.CENTER);
         topPanel.add(postButtonPanel, BorderLayout.SOUTH);
 
-        // [B] TODO: 우측 중단 - 본문 JTextArea (읽기 전용)
         contentArea.setEditable(false);
         contentArea.setLineWrap(true);
 
@@ -155,7 +153,6 @@ public class MainFrame extends JFrame {
         //   topPanel   = 우측 상단(게시글 목록)
         //   middlePanel= 우측 중단(본문)
         //   bottomPanel= 우측 하단(댓글)
-        // [B] TODO: JSplitPane으로 좌/우, 상/중/하 분할 배치
         JSplitPane verticalSplit1 =
                 new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, middlePanel);
 
@@ -172,8 +169,6 @@ public class MainFrame extends JFrame {
         mainSplit.setResizeWeight(0.2);
 
         add(mainSplit);
-        // [B] TODO: 이벤트 연결
-        //           - 종목 선택  -> loadPosts()
         // 종목 선택
         stockList.addListSelectionListener(e -> {
 
@@ -272,7 +267,6 @@ public class MainFrame extends JFrame {
         loadPosts(currentStockCode);
     });
 
-        // [B] TODO: 초기 데이터 로드 - controller.getAllStocks()
         List<StockDTO> stocks =
                 controller.getAllStocks();
 
@@ -283,7 +277,6 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    // [B] TODO: loadPosts(String stockCode)
     private void loadPosts(String stockCode) {
 
         postTableModel.setRowCount(0);
@@ -305,7 +298,6 @@ public class MainFrame extends JFrame {
     }
 
 
-    // [B] TODO: loadPostDetail(int postId)
     private void loadPostDetail(int postId) {
 
         PostDTO post = controller.getPostDetail(postId);
@@ -318,7 +310,6 @@ public class MainFrame extends JFrame {
             );
         }
     }
-    // [B] TODO: loadComments(int postId)
     private void loadComments(int postId) {
 
         commentListModel.clear();

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="model.mapper.CommentMapper">
+
+  <!-- 특정 게시글의 댓글 목록 조회 (작성시간 오름차순) -->
+  <!-- mapUnderscoreToCamelCase 덕분에 스네이크 케이스 컬럼명이 DTO 카멜 필드명에 자동 매핑됩니다. -->
+  <select id="selectByPostId" resultType="Comment">
+    SELECT comment_id, 
+           post_id, 
+           reply_content, 
+           reply_writer, 
+           created_at 
+    FROM Comment 
+    WHERE post_id = #{postId} 
+    ORDER BY created_at ASC
+  </select>
+
+  <!-- 댓글 작성 -->
+  <insert id="insertComment" useGeneratedKeys="true" keyProperty="commentId">
+    INSERT INTO Comment (post_id, reply_content, reply_writer) 
+    VALUES (#{postId}, #{replyContent}, #{replyWriter})
+  </insert>
+
+</mapper>

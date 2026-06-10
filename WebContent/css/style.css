@@ -1,0 +1,171 @@
+* {
+    box-sizing: border-box;
+    font-family: "Malgun Gothic", sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+#app {
+    display: flex;
+    height: 100vh;
+}
+
+/* 좌측: 종목 리스트 (전체 폭의 20%) */
+#stock-panel {
+    flex: 0 0 20%;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+
+#logo {
+    padding: 12px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+#stock-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#stock-list li {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+#stock-list li:hover {
+    background: #f5f5f5;
+}
+
+#stock-list li.selected {
+    background: #d6e9ff;
+    font-weight: bold;
+}
+
+/* 우측: 상(게시글 목록) / 중(본문) / 하(댓글) = 5 : 2 : 3 */
+#content-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#post-list-section {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    border-bottom: 1px solid #ccc;
+}
+
+#post-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#post-table th, #post-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 14px;
+}
+
+#post-table tbody tr {
+    cursor: pointer;
+}
+
+#post-table tbody tr:hover {
+    background: #f5f5f5;
+}
+
+#post-table tbody tr.selected {
+    background: #d6e9ff;
+}
+
+#post-buttons {
+    padding: 8px;
+    text-align: right;
+}
+
+#post-detail-section {
+    flex: 2;
+    overflow-y: auto;
+    border-bottom: 1px solid #ccc;
+}
+
+#post-content {
+    margin: 0;
+    padding: 12px;
+    white-space: pre-wrap;
+    font-family: inherit;
+}
+
+#comment-section {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#comment-list {
+    flex: 1;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+    padding: 8px 12px;
+}
+
+#comment-list li {
+    padding: 4px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#comment-input {
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+    border-top: 1px solid #eee;
+}
+
+#comment-writer {
+    flex: 0 0 120px;
+}
+
+#comment-content {
+    flex: 1;
+}
+
+/* 글쓰기 모달 */
+#write-modal {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 16px;
+    width: 400px;
+}
+
+#write-modal::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#write-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#write-form textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+#write-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}

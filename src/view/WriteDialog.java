@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 // [B 담당] 게시글 작성 모달 다이얼로그
+// 레거시 Swing 데스크톱 클라이언트. 웹 전환 후에는 WebContent의 글쓰기 폼 + AJAX POST가 대체한다
 public class WriteDialog extends JDialog {
 
     /**
@@ -62,11 +63,6 @@ public class WriteDialog extends JDialog {
         add(contentPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // [B] TODO: 입력 필드 구성 - 제목, 내용(JTextArea), 작성자, 비밀번호
-        // [B] TODO: 등록 버튼 클릭 시
-        //           - 빈 값 검증 (제목, 내용, 비밀번호 필수)
-        //           - PostDTO 조립 -> controller.writePost()
-        //           - onSuccess.run() -> dispose()
         submitBtn.addActionListener(e -> {
 
             String title =
@@ -109,7 +105,6 @@ public class WriteDialog extends JDialog {
             dispose();
         });
 
-        // [B] TODO: 취소 버튼 -> dispose()
         cancelBtn.addActionListener(e -> dispose());
 
         setVisible(true);

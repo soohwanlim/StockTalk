@@ -11,7 +11,6 @@ public class CommentDTO {
     private String replyWriter;
     private Timestamp createdAt;
 
-    // [A] TODO: getter / setter 작성
     public CommentDTO() {
     }
 

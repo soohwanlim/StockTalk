@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>StockTalk</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+    <!-- 좌측: 종목 리스트 (기존 MainFrame leftPanel) -->
+    <aside id="stock-panel">
+        <div id="logo">STOCK TALK</div>
+        <ul id="stock-list">
+            <!-- TODO: app.js - GET /api/stocks 결과로 <li data-code="..."> 렌더링 -->
+        </ul>
+    </aside>
+
+    <!-- 우측: 상단(게시글 목록) / 중단(본문) / 하단(댓글) -->
+    <main id="content-panel">
+        <!-- 상단: 게시글 목록 (기존 MainFrame topPanel) -->
+        <section id="post-list-section">
+            <table id="post-table">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>댓글수</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+                </thead>
+                <tbody id="post-list-body">
+                    <!-- TODO: app.js - GET /api/posts?stockCode=... 결과로 <tr> 렌더링 -->
+                </tbody>
+            </table>
+            <div id="post-buttons">
+                <button id="write-btn">글쓰기</button>
+                <button id="delete-btn">삭제</button>
+            </div>
+        </section>
+
+        <!-- 중단: 본문 (기존 MainFrame middlePanel) -->
+        <section id="post-detail-section">
+            <pre id="post-content"><!-- TODO: app.js - GET /api/posts?postId=... 결과로 제목/본문 표시 --></pre>
+        </section>
+
+        <!-- 하단: 댓글 (기존 MainFrame bottomPanel) -->
+        <section id="comment-section">
+            <ul id="comment-list">
+                <!-- TODO: app.js - GET /api/comments?postId=... 결과로 <li> 렌더링 -->
+            </ul>
+            <div id="comment-input">
+                <input type="text" id="comment-writer" placeholder="작성자">
+                <input type="text" id="comment-content" placeholder="댓글 입력">
+                <button id="comment-submit-btn">등록</button>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- 글쓰기 모달 (기존 WriteDialog) -->
+<dialog id="write-modal">
+    <form id="write-form">
+        <input type="text" name="title" placeholder="제목" required>
+        <textarea name="content" placeholder="내용" required></textarea>
+        <input type="text" name="writer" placeholder="작성자">
+        <input type="password" name="postPassword" placeholder="비밀번호" required>
+        <div id="write-buttons">
+            <button type="submit">등록</button>
+            <button type="button" id="write-cancel-btn">취소</button>
+        </div>
+    </form>
+</dialog>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

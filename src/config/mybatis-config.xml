@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  
+  <!-- MyBatis 전역 설정 -->
+  <settings>
+    <!-- DB의 스네이크 케이스 컬럼명(stock_code)을 자바 DTO의 카멜 케이스 필드명(stockCode)으로 자동 매핑 -->
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
+
+  <!-- DTO 모델 타입 별칭 설정 (Mapper XML에서 간단한 이름으로 사용 가능) -->
+  <typeAliases>
+    <typeAlias alias="Stock" type="model.dto.StockDTO"/>
+    <typeAlias alias="Post" type="model.dto.PostDTO"/>
+    <typeAlias alias="Comment" type="model.dto.CommentDTO"/>
+  </typeAliases>
+
+  <!-- DB 환경 설정 (싱글톤 커넥션 풀을 활용하는 POOLED 환경) -->
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/stock_db?serverTimezone=UTC&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/> <!-- 본인 환경의 DB 비밀번호로 수정 가능 -->
+      </dataSource>
+    </environment>
+  </environments>
+
+  <!-- SQL 쿼리가 담긴 Mapper 파일 경로 등록 (클래스패스 기준) -->
+  <mappers>
+    <mapper resource="model/mapper/StockMapper.xml"/>
+    <mapper resource="model/mapper/PostMapper.xml"/>
+    <mapper resource="model/mapper/CommentMapper.xml"/>
+  </mappers>
+
+</configuration>

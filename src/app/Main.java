@@ -1,5 +1,7 @@
 package app;
 
+// 레거시 Swing 데스크톱 클라이언트의 실행/테스트 진입점.
+// 웹 전환 후에는 Tomcat에 WebContent + src/web 서블릿을 배포하여 실행한다 (TODO: WebContent, src/web 참고)
 import config.DBConnection;
 import config.StockAPIClient;
 import controller.StockController;

@@ -7,8 +7,6 @@ public class StockDTO {
     private String stockName;
     private int currentPrice;
 
-    // [A] TODO: 기본 생성자, 전체 필드 생성자 작성
-    // [A] TODO: getter / setter 작성
     // [A] 기본 생성자
     public StockDTO() {
     }
