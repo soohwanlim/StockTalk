@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycom.myapp.model.mapper.CommentMapper">
+
+  <select id="selectByPostId" resultType="com.mycom.myapp.model.dto.CommentDTO">
+    SELECT comment_id,
+           post_id,
+           reply_content,
+           reply_writer,
+           created_at
+    FROM Comment
+    WHERE post_id = #{postId}
+    ORDER BY created_at ASC
+  </select>
+
+  <insert id="insertComment" useGeneratedKeys="true" keyProperty="commentId">
+    INSERT INTO Comment (post_id, reply_content, reply_writer)
+    VALUES (#{postId}, #{replyContent}, #{replyWriter})
+  </insert>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycom.myapp.model.mapper.PostMapper">
+
+  <select id="selectPostsByStock" resultType="com.mycom.myapp.model.dto.PostDTO">
+    SELECT p.post_id,
+           p.stock_code,
+           p.title,
+           p.content,
+           p.writer,
+           p.created_at,
+           COUNT(c.comment_id) AS reply_count
+    FROM Post p
+    LEFT JOIN Comment c ON p.post_id = c.post_id
+    WHERE p.stock_code = #{stockCode}
+    GROUP BY p.post_id
+    ORDER BY p.created_at DESC
+  </select>
+
+  <select id="selectPostById" resultType="com.mycom.myapp.model.dto.PostDTO">
+    SELECT post_id,
+           stock_code,
+           title,
+           content,
+           writer,
+           created_at
+    FROM Post
+    WHERE post_id = #{postId}
+  </select>
+
+  <insert id="insertPost" useGeneratedKeys="true" keyProperty="postId">
+    INSERT INTO Post (stock_code, title, content, writer, post_password)
+    VALUES (#{stockCode}, #{title}, #{content}, #{writer}, #{postPassword})
+  </insert>
+
+  <delete id="deletePost">
+    DELETE FROM Post
+    WHERE post_id = #{postId} AND post_password = #{password}
+  </delete>
+
+</mapper>
