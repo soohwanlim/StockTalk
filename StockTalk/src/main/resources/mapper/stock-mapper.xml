@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycom.myapp.model.mapper.StockMapper">
+
+  <select id="selectAll" resultType="com.mycom.myapp.model.dto.StockDTO">
+    SELECT stock_code, stock_name, current_price
+    FROM Stock
+    ORDER BY stock_name ASC
+  </select>
+
+  <select id="selectStocks" resultType="com.mycom.myapp.model.dto.StockDTO">
+    SELECT stock_code, stock_name, current_price
+    FROM Stock
+    WHERE 1 = 1
+    <if test="search != null and search.trim() != ''">
+      AND (LOWER(stock_name) LIKE CONCAT('%', LOWER(#{search}), '%') OR LOWER(stock_code) LIKE CONCAT('%', LOWER(#{search}), '%'))
+    </if>
+    ORDER BY stock_name ASC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="countStocks" resultType="int">
+    SELECT COUNT(*)
+    FROM Stock
+    WHERE 1 = 1
+    <if test="search != null and search.trim() != ''">
+      AND (LOWER(stock_name) LIKE CONCAT('%', LOWER(#{search}), '%') OR LOWER(stock_code) LIKE CONCAT('%', LOWER(#{search}), '%'))
+    </if>
+  </select>
+
+  <update id="updatePrice">
+    UPDATE Stock
+    SET current_price = #{price}
+    WHERE stock_code = #{stockCode}
+  </update>
+
+</mapper>

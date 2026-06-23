@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- board -->    
+<mapper namespace="com.mycom.myapp.board.dao.BoardDao">
+
+	<!-- parameterType 생략 가능 확인 -->
+	<select id="listBoard" resultType="com.mycom.myapp.board.dto.BoardDto">
+		select b.board_id, u.user_seq, u.user_name, u.user_profile_image, b.title, b.reg_dt, b.read_count
+		  from board b, users u
+		 where b.user_seq = u.user_seq
+		 order by b.board_id desc
+		 limit #{limit} offset #{offset};
+	</select>
+
+	<select id="listBoardTotalCount">
+		select count(*) from board;
+	</select>
+</mapper>  
